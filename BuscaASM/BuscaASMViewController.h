@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BuscaASMEspecialidades.h"
+
 @interface BuscaASMViewController : UIViewController
+
+@property (nonatomic, weak) BuscaASMEspecialidade* especialidade ;
 
 @end

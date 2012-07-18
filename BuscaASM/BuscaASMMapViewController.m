@@ -26,7 +26,7 @@
 @implementation BuscaASMMapViewController
 
 @synthesize mapView = _mapView;
-@synthesize especialidade = _especialidade ;
+@synthesize category = _category ;
 @synthesize associadosCarregados = _associadosCarregados ;
 @synthesize responseData = _responseData ;
 
@@ -119,7 +119,7 @@
             double south = mapView.region.center.latitude-mapView.region.span.latitudeDelta/2 ;
             double west = mapView.region.center.longitude-mapView.region.span.longitudeDelta/2 ;
             double east = mapView.region.center.longitude+mapView.region.span.longitudeDelta/2 ;
-            NSString *url = [[NSString alloc]initWithFormat:@"http://www.buscaasm.com/associados/locate?south=%.15g&north=%.15g&west=%.15g&east=%.15g&especialidade=%@", south, north, west, east, [self.especialidade stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]] ;
+            NSString *url = [[NSString alloc]initWithFormat:@"http://www.buscaasm.com/associados/locate?south=%.15g&north=%.15g&west=%.15g&east=%.15g&especialidade=%@", south, north, west, east, [self.category stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]] ;
             NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
             [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
             [[NSURLConnection alloc] initWithRequest:request delegate:self];

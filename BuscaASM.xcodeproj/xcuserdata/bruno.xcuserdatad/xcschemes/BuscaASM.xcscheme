@@ -47,7 +47,7 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES"
-      simulatorDisplayScale = "2.000000">
+      simulatorDisplayScale = "1.000000">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"

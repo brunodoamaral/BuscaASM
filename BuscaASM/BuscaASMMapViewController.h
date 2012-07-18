@@ -10,6 +10,6 @@
 
 @interface BuscaASMMapViewController : UIViewController
 
-@property (nonatomic, strong) NSString * especialidade ;
+@property (nonatomic, strong) NSString * category ;
 
 @end
