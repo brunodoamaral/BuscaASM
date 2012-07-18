@@ -9,16 +9,25 @@
 #import "BuscaASMViewController.h"
 #import "BuscaASMEspecialidades.h"
 #import "BuscaASMMapViewController.h"
+#import "BuscaASMBoxesView.h"
+#import "BuscaASMTouchableImageView.h"
+#import <AudioToolbox/AudioServices.h>
 
-@interface BuscaASMViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface BuscaASMViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAccelerometerDelegate, BuscaASMTouchableImageViewTouch>
 
 @property (weak, nonatomic) IBOutlet UITableView *listEspecialidades;
+@property (weak, nonatomic) IBOutlet BuscaASMBoxesView *leftBoxes;
+@property (weak, nonatomic) IBOutlet BuscaASMBoxesView *rightBoxes;
+@property (weak, nonatomic) IBOutlet BuscaASMTouchableImageView *imageLogo;
 
 @end
 
 @implementation BuscaASMViewController
 
 @synthesize listEspecialidades = _listEspecialidades;
+@synthesize leftBoxes = _leftBoxes;
+@synthesize rightBoxes = _rightBoxes;
+@synthesize imageLogo = _imageLogo;
 @synthesize especialidade = _especialidade ;
 
 - (BuscaASMEspecialidade *)especialidade
@@ -40,6 +49,8 @@
 {
     [super viewDidLoad];
     
+//    self.imageLogo.delegateLongTouch = self ;
+    
 //    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
@@ -47,6 +58,9 @@
 {
 //    [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self setListEspecialidades:nil];
+    [self setLeftBoxes:nil];
+    [self setRightBoxes:nil];
+    [self setImageLogo:nil];
     [super viewDidUnload];
   
     // Release any retained subviews of the main view.
@@ -55,6 +69,10 @@
 - (void) viewWillAppear:(BOOL)animated
 {
 //    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    //Configure and start accelerometer
+    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60.0)];
+    [[UIAccelerometer sharedAccelerometer] setDelegate:self];
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -130,6 +148,19 @@
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     return YES ;
+}
+
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+{
+    [self.leftBoxes accelerometer:accelerometer didAccelerate:acceleration];
+    [self.rightBoxes accelerometer:accelerometer didAccelerate:acceleration];
+}
+
+- (void)onLongTouchImage:(BuscaASMTouchableImageView *)image
+{
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+    [self.leftBoxes setAtive:YES] ;
+    [self.rightBoxes setAtive:YES] ;
 }
 
 @end
