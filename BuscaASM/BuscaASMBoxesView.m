@@ -191,37 +191,39 @@
 
 -(void) tick:(NSTimer *)timer
 {
-    if ( self.reset )
+    if ( self.reset ) {
         [self resetWorld];
-	//It is recommended that a fixed time step is used with Box2D for stability
-	//of the simulation, however, we are using a variable time step here.
-	//You need to make an informed choice, the following URL is useful
-	//http://gafferongames.com/game-physics/fix-your-timestep/
-    
-	int32 velocityIterations = 8;
-	int32 positionIterations = 1;
-    
-	// Instruct the world to perform a single step of simulation. It is
-	// generally best to keep the time step and iterations fixed.
-	world->Step(1.0f/60.0f, velocityIterations, positionIterations);
-    
-	//Iterate over the bodies in the physics world
-	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
-	{
-		if (b->GetUserData() != NULL)
-		{
-			BuscaASMBox *box = (__bridge BuscaASMBox *)b->GetUserData();
-            
-			// y Position subtracted because of flipped coordinate system
-			CGPoint newCenter = CGPointMake(b->GetPosition().x * PTM_RATIO,
-                                            self.bounds.size.height - b->GetPosition().y * PTM_RATIO);
-			box.coordinates = CGPointMake(newCenter.x - box.side/2, newCenter.y - box.side/2) ;
-            box.rotate = - b->GetAngle() ;
-//			CGAffineTransform transform = CGAffineTransformMakeRotation(- b->GetAngle());
-//            
-//			oneView.transform = transform;
-		}
-	}
+    } else {
+        //It is recommended that a fixed time step is used with Box2D for stability
+        //of the simulation, however, we are using a variable time step here.
+        //You need to make an informed choice, the following URL is useful
+        //http://gafferongames.com/game-physics/fix-your-timestep/
+        
+        int32 velocityIterations = 8;
+        int32 positionIterations = 1;
+        
+        // Instruct the world to perform a single step of simulation. It is
+        // generally best to keep the time step and iterations fixed.
+        world->Step(1.0f/60.0f, velocityIterations, positionIterations);
+        
+        //Iterate over the bodies in the physics world
+        for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+        {
+            if (b->GetUserData() != NULL)
+            {
+                BuscaASMBox *box = (__bridge BuscaASMBox *)b->GetUserData();
+                
+                // y Position subtracted because of flipped coordinate system
+                CGPoint newCenter = CGPointMake(b->GetPosition().x * PTM_RATIO,
+                                                self.bounds.size.height - b->GetPosition().y * PTM_RATIO);
+                box.coordinates = CGPointMake(newCenter.x - box.side/2, newCenter.y - box.side/2) ;
+                box.rotate = - b->GetAngle() ;
+    //			CGAffineTransform transform = CGAffineTransformMakeRotation(- b->GetAngle());
+    //            
+    //			oneView.transform = transform;
+            }
+        }
+    }
     [self setNeedsDisplay] ;
 }
 
@@ -314,69 +316,39 @@
     }
 }
 
-#define SIGN(x) ((x)<0?-1:1)
-#define MAX_FORCE   200
-
 - (void) resetWorld
 {
+    int finishedBoxes = 0 ;
     for (BuscaASMBox *box in self.boxes) {
-        b2Vec2 v = box.body->GetLinearVelocity() ;
-        CGPoint p = CGPointMake((box.coordinates.x-box.originalCoordinates.x)/PTM_RATIO, (box.coordinates.y-box.originalCoordinates.y)/PTM_RATIO);
-        if ( ABS(p.y*PTM_RATIO) < 1 ) {
-            // Chegou ao destino
-            box.body->m_force.y = 0 ;
-            box.body->SetLinearVelocity(b2Vec2(v.x, 0));
-            v.y = 0 ;
+        CGFloat alpha = CGColorGetAlpha(box.color) ;
+        if( CGPointEqualToPoint(box.coordinates, box.originalCoordinates) ) {
+            if ( alpha < 1 ) {
+                alpha += 0.01 ;
+            } else {
+                alpha = 1 ;
+                finishedBoxes++ ;
+            }
         } else {
-            if ( SIGN(v.y) == SIGN(box.body->m_force.y) ) {
-                // Aplicando força de aceleração
-                float32 reverseForce = -v.y*v.y/(2*p.y)*box.body->GetMass() ;
-                if ( ABS(reverseForce) > MAX_FORCE ) {
-                    // Inverte a força
-                    box.body->m_force.y = reverseForce ;
-                } else {
-                    box.body->m_force.y = -SIGN(reverseForce)*MAX_FORCE/2 ;
+            if ( alpha > 0.3 ) {
+                alpha -= 0.02 ;
+            } else {
+                box.coordinates = CGPointMake(box.coordinates.x + (box.originalCoordinates.x-box.coordinates.x)/16, box.coordinates.y + (box.originalCoordinates.y-box.coordinates.y)/16) ;
+                box.rotate = box.rotate/16 ;
+                if ( ABS(box.coordinates.x-box.originalCoordinates.x) + ABS(box.coordinates.y - box.originalCoordinates.y) < 0.2 ) {
+                    box.coordinates = box.originalCoordinates ;
+                    box.rotate = 0 ;
+                    world->DestroyBody(box.body) ;
+                    [self addPhysicalBodyForBox:box] ;
                 }
             }
         }
         
-        if ( ABS(p.x*PTM_RATIO) < 1 ) {
-            // Chegou ao destino
-            box.body->m_force.x = 0 ;
-            box.body->SetLinearVelocity(b2Vec2(0, v.y));
-            v.x = 0 ;
-        } else {
-            if ( SIGN(v.x) == SIGN(box.body->m_force.x) ) {
-                // Aplicando força de aceleração
-                float32 reverseForce = v.x*v.x/(2*p.x)*box.body->GetMass() ;
-                if ( ABS(reverseForce) > MAX_FORCE ) {
-                    // Inverte a força
-                    box.body->m_force.x = reverseForce ;
-                } else {
-                    box.body->m_force.x = -SIGN(reverseForce)*MAX_FORCE/2 ;
-                }
-            }
-        }
-
-//
-//        if (ABS(p.x) < 2) {
-//            if ( p.x != 0 )
-//                box.body->m_force.x = -v.x*v.x/(2*p.x)*box.body->GetMass();
-//        } else if ( v.x*p.x > 0 && ABS(p.x) < 4 ) {
-//            box.body->m_force.x = 0 ;
-//        } else {
-//            box.body->m_force.x = -p.x ;
-//        }
-//        if (ABS(p.y) < 2 && v.y*p.y < -2) {
-//            if ( p.y != 0 )
-//                box.body->m_force.y = v.y*v.y/(2*p.y)*box.body->GetMass();
-//        } else if ( v.y*p.y < -2 && ABS(p.y) < 4 ) {
-//            box.body->m_force.y = 0 ;
-//        } else {
-//            box.body->m_force.y = p.y ;
-//        }
-//        NSLog(@"fy=%2.4f / p.y=%2.4f",box.body->m_force.y, p.y);
-//        box.body->ApplyForceToCenter(b2Vec2(10*-p.x, 10*p.y)) ;
+        box.color = CGColorCreateCopyWithAlpha(box.color, alpha) ;
+    }
+    
+    if ( finishedBoxes == self.boxes.count ) {
+        self.reset = NO ;
+        [self.tickTimer invalidate];
     }
 }
 
@@ -387,14 +359,8 @@
         [self.tickTimer invalidate];
         self.tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
         self.reset = NO ;
-        world->SetGravity(b2Vec2(0, -9.81)) ;
     } else {
-        world->SetGravity(b2Vec2(0, 0)) ;
-        [self resetWorld];
         self.reset = YES ;
-        UIColor *uiColor = [self.colors objectAtIndex:1] ;
-        CGColorRef color = CGColorCreateCopyWithAlpha(uiColor CGColor, 0.5) ;
-        
     }
     _active = active ;
 }
