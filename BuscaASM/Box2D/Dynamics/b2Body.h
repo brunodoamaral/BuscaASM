@@ -204,6 +204,9 @@ public:
 	/// Apply a force to the center of mass. This wakes up the body.
 	/// @param force the world force vector, usually in Newtons (N).
 	void ApplyForceToCenter(const b2Vec2& force);
+    
+    void ResetForce() ;
+
 
 	/// Apply a torque. This affects the angular velocity
 	/// without affecting the linear velocity of the center of mass.
@@ -377,6 +380,7 @@ public:
 
 	/// Dump this body to a log file
 	void Dump();
+	b2Vec2 m_force;
 
 private:
 
@@ -433,7 +437,6 @@ private:
 	b2Vec2 m_linearVelocity;
 	float32 m_angularVelocity;
 
-	b2Vec2 m_force;
 	float32 m_torque;
 
 	b2World* m_world;
@@ -771,6 +774,21 @@ inline void b2Body::ApplyForceToCenter(const b2Vec2& force)
 	}
 
 	m_force += force;
+}
+
+inline void b2Body::ResetForce()
+{
+	if (m_type != b2_dynamicBody)
+	{
+		return;
+	}
+    
+	if (IsAwake() == false)
+	{
+		SetAwake(true);
+	}
+    
+	m_force.SetZero() ;
 }
 
 inline void b2Body::ApplyTorque(float32 torque)

@@ -159,8 +159,8 @@
 - (void)onLongTouchImage:(BuscaASMTouchableImageView *)image
 {
     AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-    [self.leftBoxes setAtive:YES] ;
-    [self.rightBoxes setAtive:YES] ;
+    self.leftBoxes.active = !self.leftBoxes.active ;
+    self.rightBoxes.active = !self.rightBoxes.active ;
 }
 
 @end

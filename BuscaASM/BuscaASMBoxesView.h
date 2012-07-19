@@ -10,6 +10,6 @@
 
 @interface BuscaASMBoxesView : UIView <UIAccelerometerDelegate>
 
-- (void)setAtive:(BOOL) active ;
+@property (nonatomic) BOOL active ;
 
 @end

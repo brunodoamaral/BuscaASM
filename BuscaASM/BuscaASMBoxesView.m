@@ -12,23 +12,25 @@
 #define SQUARE_SIZE 14
 #define SQUARE_BORDER 4
 #define SQUARE_DISTANCE 5
-#define SQUARE_FILL_RATE    50  // Entre 0 e 100
+#define SQUARE_FILL_RATE    5  // Entre 0 e 100
 
 #define PTM_RATIO 16
 
 @interface BuscaASMBox : NSObject
 
-    @property (nonatomic) CGPoint coordinates ;
-    @property (nonatomic) CGFloat side ;
-    @property (nonatomic) CGColorRef color ;
-    @property (nonatomic) double rotate ; // in radians
-    @property (nonatomic) b2Body *body ;
+@property (nonatomic) CGPoint coordinates ;
+@property (nonatomic) CGPoint originalCoordinates ;
+@property (nonatomic) CGFloat side ;
+@property (nonatomic) CGColorRef color ;
+@property (nonatomic) double rotate ; // in radians
+@property (nonatomic) b2Body *body ;
 
 @end
 
 @implementation BuscaASMBox
 
 @synthesize coordinates = _coordinates ;
+@synthesize originalCoordinates = _originalCoordinates ;
 @synthesize side = _side ;
 @synthesize color = _color ;
 @synthesize rotate = _rotate ;
@@ -43,6 +45,7 @@
 @property (nonatomic, strong) NSArray * colors ;
 @property (nonatomic, strong) NSMutableArray *boxes ;
 @property (nonatomic) NSTimer *tickTimer;
+@property (nonatomic) BOOL reset ;
 
 
 @end
@@ -52,7 +55,9 @@
 
 @synthesize colors = _colors;
 @synthesize boxes = _boxes ;
-@synthesize  tickTimer = _tickTimer ;
+@synthesize tickTimer = _tickTimer ;
+@synthesize active = _active ;
+@synthesize reset = _reset ;
 
 - (NSArray *)colors
 {
@@ -89,6 +94,7 @@
             if ( arc4random()%100 < SQUARE_FILL_RATE ) {
                 BuscaASMBox *box = [[BuscaASMBox alloc] init] ;
                 box.coordinates = CGPointMake(x, y ) ;
+                box.originalCoordinates = box.coordinates ;
                 box.side = SQUARE_SIZE ;
                 box.rotate = 0 ; //2 * M_PI * (arc4random() % 360) / 360  ;
                 box.color = [[self.colors objectAtIndex:(arc4random() % self.colors.count)] CGColor] ;
@@ -185,6 +191,8 @@
 
 -(void) tick:(NSTimer *)timer
 {
+    if ( self.reset )
+        [self resetWorld];
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
 	//You need to make an informed choice, the following URL is useful
@@ -299,18 +307,52 @@
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
-	b2Vec2 gravity;
-	gravity.Set( acceleration.x * 9.81,  acceleration.y * 9.81 );
-    
-	world->SetGravity(gravity);
+    if ( ! self.reset ) {
+        b2Vec2 gravity;
+        gravity.Set( acceleration.x * 9.81,  acceleration.y * 9.81 );
+        world->SetGravity(gravity);
+    }
 }
 
-- (void) setAtive:(BOOL) active
+- (void) resetWorld
 {
-    [self.tickTimer invalidate];
-    if ( active ) {
-        self.tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+    for (BuscaASMBox *box in self.boxes) {
+        b2Vec2 v = box.body->GetLinearVelocity() ;
+        CGPoint p = CGPointMake((box.coordinates.x-box.originalCoordinates.x)/PTM_RATIO, (box.coordinates.y-box.originalCoordinates.y)/PTM_RATIO);
+        if (ABS(p.x) < 2) {
+            if ( p.x != 0 )
+                box.body->m_force.x = -v.x*v.x/(2*p.x)*box.body->GetMass();
+        } else if ( v.x*p.x > 0 && ABS(p.x) < 4 ) {
+            box.body->m_force.x = 0 ;
+        } else {
+            box.body->m_force.x = -p.x ;
+        }
+        if (ABS(p.y) < 2 && v.y*p.y < -2) {
+            if ( p.y != 0 )
+                box.body->m_force.y = v.y*v.y/(2*p.y)*box.body->GetMass();
+        } else if ( v.y*p.y < -2 && ABS(p.y) < 4 ) {
+            box.body->m_force.y = 0 ;
+        } else {
+            box.body->m_force.y = p.y ;
+        }
+        NSLog(@"fy=%2.4f / p.y=%2.4f",box.body->m_force.y, p.y);
+//        box.body->ApplyForceToCenter(b2Vec2(10*-p.x, 10*p.y)) ;
     }
+}
+
+- (void)setActive:(BOOL)active
+{
+    NSLog(@"active = %d", active);
+    if ( active ) {
+        [self.tickTimer invalidate];
+        self.tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+        self.reset = NO ;
+    } else {
+        world->SetGravity(b2Vec2(0, 0)) ;
+        [self resetWorld];
+        self.reset = YES ;
+    }
+    _active = active ;
 }
 
 @end
