@@ -16,11 +16,14 @@
 
 #define PTM_RATIO 16
 
+#define GRAVITY 16.0f
+
 @interface BuscaASMBox : NSObject
 
     @property (nonatomic) CGPoint coordinates ;
     @property (nonatomic) CGPoint originalCoordinates ;
     @property (nonatomic) CGFloat side ;
+    @property (nonatomic) CGColorRef color ;
     @property (nonatomic) int idxColor ;
     @property (nonatomic) double rotate ; // in radians
     @property (nonatomic) b2Body *body ;
@@ -32,6 +35,7 @@
 @synthesize coordinates = _coordinates ;
 @synthesize originalCoordinates = _originalCoordinates ;
 @synthesize side = _side ;
+@synthesize color = _color ;
 @synthesize idxColor = _idxColor ;
 @synthesize rotate = _rotate ;
 @synthesize body = _body ;
@@ -42,9 +46,12 @@
     b2World* world;
 }
 
+- (void) resetWorld ;
+
 @property (nonatomic, strong) NSArray * colors ;
 @property (nonatomic, strong) NSMutableArray *boxes ;
 @property (nonatomic) NSTimer *tickTimer;
+@property (nonatomic) double lastTime ;
 @property (nonatomic) BOOL reset ;
 
 
@@ -55,6 +62,7 @@
 
 @synthesize colors = _colors;
 @synthesize boxes = _boxes ;
+@synthesize lastTime = _lastTime ;
 @synthesize tickTimer = _tickTimer ;
 @synthesize active = _active ;
 @synthesize reset = _reset ;
@@ -97,14 +105,13 @@
                 box.originalCoordinates = box.coordinates ;
                 box.side = SQUARE_SIZE ;
                 box.rotate = 0 ; //2 * M_PI * (arc4random() % 360) / 360  ;
-                box.idxColor = arc4random() % self.colors.count ; //[[self.colors objectAtIndex:(arc4random() % self.colors.count)] CGColor] ;
+                box.idxColor = arc4random() % self.colors.count ;
+                box.color = [[self.colors objectAtIndex:(box.idxColor)] CGColor] ;
                 [self.boxes addObject:box];
                 [self addPhysicalBodyForBox:box] ;
             }
         }
     }
-    
-//    self.tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
 }
 
 -(void)createPhysicsWorld
@@ -113,7 +120,7 @@
     
 	// Define the gravity vector.
 	b2Vec2 gravity;
-	gravity.Set(0.0f, -9.81f);
+	gravity.Set(0.0f, -GRAVITY);
     
 	// Do we want to let bodies sleep?
 	// This will speed up the physics simulation
@@ -191,20 +198,25 @@
 
 -(void) tick:(NSTimer *)timer
 {
+    if ( self.lastTime == 0 )
+        self.lastTime = [[NSDate date] timeIntervalSince1970];
+        
     if ( self.reset ) {
         [self resetWorld];
     } else {
+        double thisTime = [[NSDate date] timeIntervalSince1970];
+        
         //It is recommended that a fixed time step is used with Box2D for stability
         //of the simulation, however, we are using a variable time step here.
         //You need to make an informed choice, the following URL is useful
         //http://gafferongames.com/game-physics/fix-your-timestep/
         
         int32 velocityIterations = 8;
-        int32 positionIterations = 1;
+        int32 positionIterations = 8;
         
         // Instruct the world to perform a single step of simulation. It is
         // generally best to keep the time step and iterations fixed.
-        world->Step(1.0f/60.0f, velocityIterations, positionIterations);
+        world->Step(thisTime-self.lastTime, velocityIterations, positionIterations);
         
         //Iterate over the bodies in the physics world
         for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
@@ -223,6 +235,9 @@
     //			oneView.transform = transform;
             }
         }
+        
+        self.lastTime = thisTime ;
+        [self setNeedsDisplay] ;
     }
     [self setNeedsDisplay] ;
 }
@@ -264,7 +279,7 @@
 //    CGAffineTransform matrixBefore = CGContextGetCTM(context) ;
     UIGraphicsPushContext(context) ;
     
-    CGContextSetFillColorWithColor(context, [[self.colors objectAtIndex:box.idxColor] CGColor]) ;
+    CGContextSetFillColorWithColor(context, box.color) ;
     
     // Rotate context
     CGContextTranslateCTM( context, box.coordinates.x + SQUARE_SIZE/2, box.coordinates.y + SQUARE_SIZE/2 ) ;
@@ -311,7 +326,7 @@
 {
     if ( ! self.reset ) {
         b2Vec2 gravity;
-        gravity.Set( acceleration.x * 9.81,  acceleration.y * 9.81 );
+        gravity.Set( acceleration.x * GRAVITY,  acceleration.y * GRAVITY );
         world->SetGravity(gravity);
     }
 }
@@ -333,7 +348,7 @@
                 alpha -= 0.02 ;
             } else {
                 box.coordinates = CGPointMake(box.coordinates.x + (box.originalCoordinates.x-box.coordinates.x)/16, box.coordinates.y + (box.originalCoordinates.y-box.coordinates.y)/16) ;
-                box.rotate = box.rotate/16 ;
+                box.rotate += -box.rotate/16 ;
                 if ( ABS(box.coordinates.x-box.originalCoordinates.x) + ABS(box.coordinates.y - box.originalCoordinates.y) < 0.2 ) {
                     box.coordinates = box.originalCoordinates ;
                     box.rotate = 0 ;
@@ -349,6 +364,7 @@
     if ( finishedBoxes == self.boxes.count ) {
         self.reset = NO ;
         [self.tickTimer invalidate];
+        self.lastTime = 0 ;
     }
 }
 
