@@ -18,12 +18,12 @@
 
 @interface BuscaASMBox : NSObject
 
-@property (nonatomic) CGPoint coordinates ;
-@property (nonatomic) CGPoint originalCoordinates ;
-@property (nonatomic) CGFloat side ;
-@property (nonatomic) CGColorRef color ;
-@property (nonatomic) double rotate ; // in radians
-@property (nonatomic) b2Body *body ;
+    @property (nonatomic) CGPoint coordinates ;
+    @property (nonatomic) CGPoint originalCoordinates ;
+    @property (nonatomic) CGFloat side ;
+    @property (nonatomic) CGColorRef color ;
+    @property (nonatomic) double rotate ; // in radians
+    @property (nonatomic) b2Body *body ;
 
 @end
 
