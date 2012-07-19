@@ -80,11 +80,6 @@
 //    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell*)sender
