@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) NSMutableSet *associadosCarregados ;
 @property (nonatomic, strong) NSMutableData *responseData ;
+@property (weak, nonatomic) IBOutlet UIView *helpButton;
+@property (strong, nonatomic) UIPopoverController* popController ;
 
 @end
 
@@ -27,8 +29,31 @@
 
 @synthesize mapView = _mapView;
 @synthesize category = _category ;
+@synthesize toolBar = _tollBar;
+@synthesize toolBarTitle = _toolBarTitle;
 @synthesize associadosCarregados = _associadosCarregados ;
 @synthesize responseData = _responseData ;
+@synthesize popController = _popController ;
+
+- (UIPopoverController *)popController
+{
+    if ( !_popController && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+        UIViewController *popHelpView = [self.storyboard instantiateViewControllerWithIdentifier:@"helpView"] ;
+        _popController = [[UIPopoverController alloc] initWithContentViewController:popHelpView];
+    } ;
+    return _popController ;
+}
+
+- (void)setCategory:(NSString *)category
+{
+    if ( _category != category ) {
+        _category = category ;
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [self.associadosCarregados removeAllObjects];
+        if( self.view.window )
+            [self updateMap:self.mapView];
+    }
+}
 
 - (NSMutableData*) responseData
 {
@@ -69,21 +94,36 @@
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureCaptured:)];
     pan.delegate = self;
     [self.mapView addGestureRecognizer:pan];
+    
+    if (self.mapView.userLocation.location) {
+        [self mapView:self.mapView didUpdateUserLocation:self.mapView.userLocation];
+    }
 }
 
-- (void)didReceiveMemoryWarning
+- (void)hideHelp
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.popController dismissPopoverAnimated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if ( UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]) ) {
+        UIBarButtonItem *toolBar = [self.toolBar.items objectAtIndex:0] ;
+        [self.popController presentPopoverFromBarButtonItem:toolBar permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES] ;
+    };
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 - (void)viewDidUnload {
     [self setMapView:nil];
+    [self setToolBar:nil];
+    [self setToolBarTitle:nil];
+    [self setHelpButton:nil];
     [super viewDidUnload];
 }
 

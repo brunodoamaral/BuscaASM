@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2809" systemVersion="11E53" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="9y9-Jr-gog">
+    <dependencies>
+        <deployment version="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1884"/>
+    </dependencies>
+    <scenes>
+        <!--BuscaASM View Controller - Busca ASM-->
+        <scene sceneID="PKC-NW-gGZ">
+            <objects>
+                <viewController title="Busca ASM" id="Elg-n1-jzA" customClass="BuscaASMViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="May-fL-ICx">
+                        <rect key="frame" x="0.0" y="64" width="320" height="788"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="BcA-h9-7em">
+                                <rect key="frame" x="-1" y="69" width="320" height="719"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellEspecialidade" textLabel="nIu-Or-ANP" style="IBUITableViewCellStyleDefault" id="TjI-7f-1t8">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" text="Title" adjustsFontSizeToFit="NO" autoshrinkMode="none" id="nIu-Or-ANP">
+                                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="cellLoading" id="uGn-eL-YLY">
+                                        <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" id="erQ-BP-gFR">
+                                                    <rect key="frame" x="150" y="11" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="0.90038372219999996" green="1" blue="0.36711083370000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Elg-n1-jzA" id="li5-fY-p5B"/>
+                                    <outlet property="delegate" destination="Elg-n1-jzA" id="pxj-xG-E4M"/>
+                                </connections>
+                            </tableView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" hasAttributedTitle="NO" lineBreakMode="middleTruncation" id="yp5-F0-4Wy">
+                                <rect key="frame" x="79" y="396" width="161" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="self segue (hidden)">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Elg-n1-jzA" kind="push" identifier="viewEspecialidade" id="VQU-nz-na7"/>
+                                </connections>
+                            </button>
+                            <imageView contentMode="top" image="title.png" id="ivP-mV-3Rm" customClass="BuscaASMTouchableImageView">
+                                <rect key="frame" x="103" y="0.0" width="112" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="delegateLongTouch" destination="Elg-n1-jzA" id="kAh-Ly-5Tz"/>
+                                </connections>
+                            </imageView>
+                            <view contentMode="scaleToFill" id="zAG-lz-X0x" customClass="BuscaASMBoxesView">
+                                <rect key="frame" x="0.0" y="0.0" width="95" height="61"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="GJB-AE-umj" customClass="BuscaASMBoxesView">
+                                <rect key="frame" x="222" y="0.0" width="97" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Todas as Especialidades" id="Q64-3U-H7P"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="imageLogo" destination="ivP-mV-3Rm" id="vPi-Ua-Otj"/>
+                        <outlet property="leftBoxes" destination="zAG-lz-X0x" id="vfE-er-uVO"/>
+                        <outlet property="listEspecialidades" destination="BcA-h9-7em" id="MuF-Af-2su"/>
+                        <outlet property="rightBoxes" destination="GJB-AE-umj" id="t4i-xZ-IVE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZEJ-tn-TGS" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1940" y="-479"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="POo-bj-1Qn">
+            <objects>
+                <navigationController id="QhY-NR-Yuz" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="M9S-Ft-7DS">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Elg-n1-jzA" kind="relationship" relationship="rootViewController" id="H0g-6d-FqH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2py-sK-Aux" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2657" y="-479"/>
+        </scene>
+        <!--Split View Controller-->
+        <scene sceneID="zzx-mA-ddG">
+            <objects>
+                <splitViewController id="9y9-Jr-gog" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <connections>
+                        <segue destination="QhY-NR-Yuz" kind="relationship" relationship="masterViewController" id="b3v-5K-mgt"/>
+                        <segue destination="Q0d-xl-CaZ" kind="relationship" relationship="detailViewController" id="Jab-dg-0cI"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="glA-7J-g3T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3637" y="-11"/>
+        </scene>
+        <!--BuscaASM Map View Controller-->
+        <scene sceneID="Iea-zW-KGe">
+            <objects>
+                <viewController id="Q0d-xl-CaZ" customClass="BuscaASMMapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Tl2-co-2fh">
+                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Mjh-n9-aAB">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="kwC-m3-GBa"/>
+                                    <barButtonItem style="plain" id="yKE-xP-8MQ"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="srt-hN-jPa"/>
+                                </items>
+                            </toolbar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="nad-QJ-ltn">
+                                <rect key="frame" x="0.0" y="44" width="768" height="960"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="Q0d-xl-CaZ" id="MZA-T9-UpO"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="nad-QJ-ltn" id="1uc-3l-ftp"/>
+                        <outlet property="toolBar" destination="Mjh-n9-aAB" id="sLV-cE-Qb8"/>
+                        <outlet property="toolBarTitle" destination="yKE-xP-8MQ" id="aZp-dL-bn7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IP5-L3-99h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2657" y="645"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="1IM-b4-iLF">
+            <objects>
+                <viewController storyboardIdentifier="helpView" id="ckK-Cc-UDc" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="z31-Ud-xDh">
+                        <rect key="frame" x="0.0" y="20" width="200" height="90"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" text="Clique aqui pra iniciar" textAlignment="center" adjustsFontSizeToFit="NO" autoshrinkMode="none" id="XBl-kP-CTs">
+                                <rect key="frame" x="20" y="0.0" width="160" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="highlightedColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="UMh-fW-L2J" customClass="BuscaASMBoxesView">
+                                <rect key="frame" x="10" y="50" width="180" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zLE-ew-dJ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1666" y="491"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="title.png" width="112" height="61"/>
+    </resources>
+    <classes>
+        <class className="BuscaASMBoxesView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMBoxesView.h"/>
+        </class>
+        <class className="BuscaASMMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="helpButton" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="toolBar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="toolBarTitle" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="BuscaASMTouchableImageView" superclassName="UIImageView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMTouchableImageView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="delegateLongTouch"/>
+            </relationships>
+        </class>
+        <class className="BuscaASMViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageLogo" candidateClass="BuscaASMTouchableImageView"/>
+                <relationship kind="outlet" name="leftBoxes" candidateClass="BuscaASMBoxesView"/>
+                <relationship kind="outlet" name="listEspecialidades" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="mapViewController" candidateClass="BuscaASMMapViewController"/>
+                <relationship kind="outlet" name="rightBoxes" candidateClass="BuscaASMBoxesView"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="H0g-6d-FqH"/>
+    </inferredMetricsTieBreakers>
+</document>

@@ -10,6 +10,10 @@
 
 @interface BuscaASMMapViewController : UIViewController
 
+- (void) hideHelp ;
+
 @property (nonatomic, strong) NSString * category ;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarTitle;
 
 @end

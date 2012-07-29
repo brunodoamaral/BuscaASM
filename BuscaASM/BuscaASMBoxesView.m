@@ -84,6 +84,10 @@
 {
     [self createPhysicsWorld];
     
+    [self.boxes removeAllObjects];
+    
+    NSLog(@"dimensions = (%f, %f)", self.frame.size.width, self.frame.size.height);
+    
     for( int x=0; x<self.bounds.size.width-SQUARE_SIZE; x += SQUARE_SIZE+SQUARE_BORDER) {
         for( int y=0; y<self.bounds.size.height-SQUARE_SIZE; y += SQUARE_SIZE+SQUARE_BORDER) {
             if ( arc4random()%100 < SQUARE_FILL_RATE ) {
@@ -103,6 +107,9 @@
 
 -(void)createPhysicsWorld
 {
+    if ( world ) {
+        delete world ;
+    }
 	CGSize screenSize = self.bounds.size;
     
 	// Define the gravity vector.
@@ -239,6 +246,12 @@
     return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self setup] ;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -312,5 +325,4 @@
         self.tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
     }
 }
-
 @end

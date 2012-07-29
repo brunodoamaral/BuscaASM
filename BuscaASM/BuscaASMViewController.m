@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet BuscaASMBoxesView *leftBoxes;
 @property (weak, nonatomic) IBOutlet BuscaASMBoxesView *rightBoxes;
 @property (weak, nonatomic) IBOutlet BuscaASMTouchableImageView *imageLogo;
+@property (weak, nonatomic, readonly) IBOutlet BuscaASMMapViewController *mapViewController ;
 
 @end
 
@@ -29,6 +30,18 @@
 @synthesize rightBoxes = _rightBoxes;
 @synthesize imageLogo = _imageLogo;
 @synthesize especialidade = _especialidade ;
+@synthesize mapViewController = _mapViewController ;
+
+- (BuscaASMMapViewController *)mapViewController
+{
+    if ( !_mapViewController ) {
+        id mvc = [self.splitViewController.viewControllers lastObject] ;
+        if ( [mvc isKindOfClass:[BuscaASMMapViewController class]] ) {
+            _mapViewController = mvc ;
+        }
+    }
+    return _mapViewController ;
+}
 
 - (BuscaASMEspecialidade *)especialidade
 {
@@ -43,15 +56,6 @@
 {
     _especialidade = especialidade ;
     self.navigationItem.title = especialidade.name ;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-//    self.imageLogo.delegateLongTouch = self ;
-    
-//    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewDidUnload
@@ -72,20 +76,17 @@
     //Configure and start accelerometer
     [[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60.0)];
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
-
-}
-
-- (void) viewWillDisappear:(BOOL)animated
-{
-//    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    if ( self.mapViewController ) {
+        // iPad
+        self.mapViewController.toolBarTitle.title = @"" ;
+        [self.mapViewController hideHelp];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return YES;
 }
-
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell*)sender
 {
@@ -117,7 +118,9 @@
     if ( ! cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] ;
     }
-    cell.textLabel.text = ((BuscaASMEspecialidade*) [self.especialidade.children objectAtIndex:indexPath.row]).name ;
+    BuscaASMEspecialidade *especialidade = ((BuscaASMEspecialidade*) [self.especialidade.children objectAtIndex:indexPath.row]) ;
+    cell.textLabel.text = especialidade.name ;
+    cell.accessoryType = especialidade.children.count > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone ;
 
     return cell ;
 }
@@ -131,7 +134,14 @@
 {
     BuscaASMEspecialidade * especialidade = (BuscaASMEspecialidade*) [self.especialidade.children objectAtIndex:indexPath.row];
     if ( [especialidade.children count] == 0 ) {
-        [self performSegueWithIdentifier:@"viewMap" sender:[tableView cellForRowAtIndexPath:indexPath] ] ;
+        if ( self.mapViewController ) {
+            // iPad
+            self.mapViewController.toolBarTitle.title = especialidade.name ;
+            self.mapViewController.category = [especialidade.categories anyObject];
+        } else {
+            // iPhone
+            [self performSegueWithIdentifier:@"viewMap" sender:[tableView cellForRowAtIndexPath:indexPath] ] ;
+        }
     } else {
         [self performSegueWithIdentifier:@"viewEspecialidade" sender:[tableView cellForRowAtIndexPath:indexPath] ] ;
     }
@@ -161,6 +171,39 @@
     AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     [self.leftBoxes setAtive:YES] ;
     [self.rightBoxes setAtive:YES] ;
+}
+
+- (BOOL)splitViewController:(UISplitViewController *)svc
+   shouldHideViewController:(UIViewController *)vc
+              inOrientation:(UIInterfaceOrientation)orientation
+{
+    return UIInterfaceOrientationIsPortrait(orientation) ; ;
+}
+
+-(void)splitViewController:(UISplitViewController *)svc
+    willHideViewController:(UIViewController *)aViewController
+         withBarButtonItem:(UIBarButtonItem *)barButtonItem
+      forPopoverController:(UIPopoverController *)pc
+{
+    barButtonItem.title = self.title ;
+    NSMutableArray *toolBarItens = [self.mapViewController.toolBar.items mutableCopy] ;
+    [toolBarItens insertObject:barButtonItem atIndex:0];
+    self.mapViewController.toolBar.items = toolBarItens ;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc
+     willShowViewController:(UIViewController *)aViewController
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    NSMutableArray *toolBarItens = [self.mapViewController.toolBar.items mutableCopy] ;
+    [toolBarItens removeObject:barButtonItem];
+    self.mapViewController.toolBar.items = toolBarItens ;
+}
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.splitViewController.delegate = self;
 }
 
 @end

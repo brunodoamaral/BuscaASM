@@ -10,7 +10,7 @@
 
 #import "BuscaASMEspecialidades.h"
 
-@interface BuscaASMViewController : UIViewController
+@interface BuscaASMViewController : UIViewController <UISplitViewControllerDelegate>
 
 @property (nonatomic, weak) BuscaASMEspecialidade* especialidade ;
 

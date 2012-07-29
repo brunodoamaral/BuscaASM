@@ -30,7 +30,7 @@
 		153BB7B115A7CFF5008F5C06 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7AF15A7CFF5008F5C06 /* InfoPlist.strings */; };
 		153BB7B315A7CFF5008F5C06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 153BB7B215A7CFF5008F5C06 /* main.m */; };
 		153BB7B715A7CFF5008F5C06 /* BuscaASMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 153BB7B615A7CFF5008F5C06 /* BuscaASMAppDelegate.m */; };
-		153BB7BA15A7CFF5008F5C06 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7B815A7CFF5008F5C06 /* MainStoryboard.storyboard */; };
+		153BB7BA15A7CFF5008F5C06 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7B815A7CFF5008F5C06 /* iPhone.storyboard */; };
 		153BB7BD15A7CFF5008F5C06 /* BuscaASMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 153BB7BC15A7CFF5008F5C06 /* BuscaASMViewController.m */; };
 		153BB7D115A7D4A9008F5C06 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7CF15A7D4A9008F5C06 /* title.png */; };
 		153BB7D215A7D4A9008F5C06 /* title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7D015A7D4A9008F5C06 /* title@2x.png */; };
@@ -44,6 +44,7 @@
 		153BB7E815A7D9BA008F5C06 /* startup4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7E615A7D9BA008F5C06 /* startup4-256.png */; };
 		153BB7EA15A7D9C0008F5C06 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7E915A7D9C0008F5C06 /* Default.png */; };
 		153BB7EC15A7D9C6008F5C06 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 153BB7EB15A7D9C6008F5C06 /* Default@2x.png */; };
+		1599316015C5C8AD00382EDC /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1599315F15C5C8AD00382EDC /* iPad.storyboard */; };
 		15A9C90915A8AB1700648AD3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A9C90815A8AB1700648AD3 /* CoreLocation.framework */; };
 		15C3B90315B203FA00BCD7F5 /* BuscaASMAssociado.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C3B90215B203FA00BCD7F5 /* BuscaASMAssociado.m */; };
 		15DB128F15B1CA3400D4D9B5 /* BuscaASMMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DB128E15B1CA3400D4D9B5 /* BuscaASMMapViewController.m */; };
@@ -142,7 +143,7 @@
 		153BB7B415A7CFF5008F5C06 /* BuscaASM-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BuscaASM-Prefix.pch"; sourceTree = "<group>"; };
 		153BB7B515A7CFF5008F5C06 /* BuscaASMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuscaASMAppDelegate.h; sourceTree = "<group>"; };
 		153BB7B615A7CFF5008F5C06 /* BuscaASMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuscaASMAppDelegate.m; sourceTree = "<group>"; };
-		153BB7B915A7CFF5008F5C06 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		153BB7B915A7CFF5008F5C06 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		153BB7BB15A7CFF5008F5C06 /* BuscaASMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuscaASMViewController.h; sourceTree = "<group>"; };
 		153BB7BC15A7CFF5008F5C06 /* BuscaASMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuscaASMViewController.m; sourceTree = "<group>"; };
 		153BB7CF15A7D4A9008F5C06 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
@@ -157,6 +158,7 @@
 		153BB7E615A7D9BA008F5C06 /* startup4-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startup4-256.png"; sourceTree = "<group>"; };
 		153BB7E915A7D9C0008F5C06 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		153BB7EB15A7D9C6008F5C06 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		1599315F15C5C8AD00382EDC /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = "<group>"; };
 		15A9C90815A8AB1700648AD3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		15C3B90115B203FA00BCD7F5 /* BuscaASMAssociado.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuscaASMAssociado.h; sourceTree = "<group>"; };
 		15C3B90215B203FA00BCD7F5 /* BuscaASMAssociado.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuscaASMAssociado.m; sourceTree = "<group>"; };
@@ -356,7 +358,8 @@
 				153BB7C315A7D0B2008F5C06 /* Model */,
 				153BB7B515A7CFF5008F5C06 /* BuscaASMAppDelegate.h */,
 				153BB7B615A7CFF5008F5C06 /* BuscaASMAppDelegate.m */,
-				153BB7B815A7CFF5008F5C06 /* MainStoryboard.storyboard */,
+				1599315F15C5C8AD00382EDC /* iPad.storyboard */,
+				153BB7B815A7CFF5008F5C06 /* iPhone.storyboard */,
 				153BB7AD15A7CFF5008F5C06 /* Supporting Files */,
 			);
 			path = BuscaASM;
@@ -633,7 +636,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				153BB7B115A7CFF5008F5C06 /* InfoPlist.strings in Resources */,
-				153BB7BA15A7CFF5008F5C06 /* MainStoryboard.storyboard in Resources */,
+				153BB7BA15A7CFF5008F5C06 /* iPhone.storyboard in Resources */,
 				153BB7D115A7D4A9008F5C06 /* title.png in Resources */,
 				153BB7D215A7D4A9008F5C06 /* title@2x.png in Resources */,
 				153BB7D515A7D6F5008F5C06 /* home.png in Resources */,
@@ -650,6 +653,7 @@
 				1522C6AE15A7DE1700830F86 /* list@2x.png in Resources */,
 				58E3D64915B75EFC0057031B /* Box2DConfig.cmake in Resources */,
 				58E3D64A15B75EFC0057031B /* CMakeLists.txt in Resources */,
+				1599316015C5C8AD00382EDC /* iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,12 +744,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		153BB7B815A7CFF5008F5C06 /* MainStoryboard.storyboard */ = {
+		153BB7B815A7CFF5008F5C06 /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				153BB7B915A7CFF5008F5C06 /* en */,
 			);
-			name = MainStoryboard.storyboard;
+			name = iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -804,7 +808,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BuscaASM/BuscaASM-Prefix.pch";
 				INFOPLIST_FILE = "BuscaASM/BuscaASM-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -815,7 +821,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BuscaASM/BuscaASM-Prefix.pch";
 				INFOPLIST_FILE = "BuscaASM/BuscaASM-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

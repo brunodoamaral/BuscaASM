@@ -4,30 +4,30 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "BuscaASM/BuscaASMViewController.m"
-         timestampString = "364270389.497397"
+         filePath = "BuscaASM/BuscaASMBoxesView.m"
+         timestampString = "365282949.761018"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
-         landmarkName = "-viewDidUnload"
+         startingLineNumber = "89"
+         endingLineNumber = "89"
+         landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "BuscaASM/BuscaASMMapViewController.h"
-         timestampString = "363991062.312097"
+         filePath = "BuscaASM/BuscaASMMapViewController.m"
+         timestampString = "365295821.414888"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "15"
-         endingLineNumber = "15"
-         landmarkName = "@interface BuscaASMMapViewController"
-         landmarkType = "2">
+         startingLineNumber = "50"
+         endingLineNumber = "50"
+         landmarkName = "-setCategory:"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>
