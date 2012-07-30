@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2809" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="e4r-Yk-w3k">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2541" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="e4r-Yk-w3k">
     <dependencies>
         <deployment version="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1884"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1875"/>
     </dependencies>
     <scenes>
         <!--BuscaASM View Controller - Busca ASM-->
@@ -288,49 +288,6 @@
         <image name="list.png" width="24" height="24"/>
         <image name="title.png" width="112" height="61"/>
     </resources>
-    <classes>
-        <class className="BuscaASMBoxesView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMBoxesView.h"/>
-        </class>
-        <class className="BuscaASMDetalheViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMDetalheViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="fields" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="BuscaASMListaMedicosViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMListaMedicosViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="listaMedicos" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="BuscaASMMapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMMapViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="helpButton" candidateClass="UIView"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="toolBar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="toolBarTitle" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="BuscaASMTouchableImageView" superclassName="UIImageView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMTouchableImageView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="delegateLongTouch"/>
-            </relationships>
-        </class>
-        <class className="BuscaASMViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BuscaASMViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageLogo" candidateClass="BuscaASMTouchableImageView"/>
-                <relationship kind="outlet" name="leftBoxes" candidateClass="BuscaASMBoxesView"/>
-                <relationship kind="outlet" name="listEspecialidades" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="mapViewController" candidateClass="BuscaASMMapViewController"/>
-                <relationship kind="outlet" name="rightBoxes" candidateClass="BuscaASMBoxesView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

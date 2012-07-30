@@ -47,6 +47,15 @@
     return _associadoFields ;
 }
 
+- (void)setAssociado:(BuscaASMAssociado *)associado
+{
+    if ( _associado != associado ) {
+        [self.mapView removeAnnotations:self.mapView.annotations] ;
+        _associado = associado ; 
+        [self updateMap] ;
+    }
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -56,15 +65,22 @@
     return self;
 }
 
+- (void) updateMap
+{
+    if ( self.associado ) {
+        [self.mapView addAnnotation:self.associado] ;
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (CLLocationCoordinate2DMake(self.associado.latitude, self.associado.longitude), 100, 100);
+        [self.mapView setRegion:region animated:NO];
+        [self.fields reloadData];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (CLLocationCoordinate2DMake(self.associado.latitude, self.associado.longitude), 100, 100);
-    [self.mapView setRegion:region animated:NO];
-    [self.mapView addAnnotation:self.associado] ;
 
+    [self updateMap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,43 +109,32 @@
 {
     NSString *field = [self.associadoFields objectAtIndex:indexPath.row] ;
     UITableViewCell * cell ;
-//    if ( [field isEqualToString:@"latlon"] ) {
-//        NSString *cellId = @"cellFieldMap" ;
-//        cell = [tableView dequeueReusableCellWithIdentifier:cellId] ;
-//        if ( ! cell ) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] ;
-//        }
-//        MKMapView *mapView = (MKMapView *) [cell viewWithTag:1] ;
-//        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (CLLocationCoordinate2DMake(self.associado.latitude, self.associado.longitude), 100, 100);
-//        [mapView setRegion:region animated:NO];
-//        [mapView addAnnotation:self.associado] ;
-//    } else {
-        NSString *cellId = @"cellField" ;
-        cell = [tableView dequeueReusableCellWithIdentifier:cellId] ;
-        if ( ! cell ) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] ;
-        }
-        
-        cell.detailTextLabel.text = [self.associado valueForKey:field] ;
-        cell.textLabel.text = field ;
-//    }
+
+    NSString *cellId = @"cellField" ;
+    cell = [tableView dequeueReusableCellWithIdentifier:cellId] ;
+    if ( ! cell ) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] ;
+    }
+    
+    cell.detailTextLabel.text = [self.associado valueForKey:field] ;
+    cell.textLabel.text = field ;
     
     return cell ;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-//{
-//    NSLog(@"row = %d",indexPath.row);
-//    NSString *field = [self.associadoFields objectAtIndex:indexPath.row] ;
-//    if ( [field isEqualToString:@"latlon"] ) {
-//        return 150 ;
-//    } else {
-//        UITableViewCell *detailCell = [tableView dequeueReusableCellWithIdentifier:@"cellField"] ;
-//        UILabel *detailLabel = detailCell.detailTextLabel ;
-//        CGSize requiredSize = [[self.associado valueForKey:field] sizeWithFont:detailLabel.font forWidth:detailLabel.frame.size.width lineBreakMode:detailLabel.lineBreakMode] ;
-//        NSLog(@"height for %@ em %f é (%f, %f)", [self.associado valueForKey:field], detailLabel.frame.size.width, requiredSize.width, requiredSize.height);
-//        return 20 + requiredSize.height ;
-//    }
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    NSString *field = [self.associadoFields objectAtIndex:indexPath.row] ;
+
+    UITableViewCell *detailCell = [tableView dequeueReusableCellWithIdentifier:@"cellField"] ;
+    UILabel *detailLabel = detailCell.detailTextLabel ;
+    CGRect frame = detailLabel.frame ;
+    frame.size.width = 200 ;
+    detailLabel.frame = frame ;
+    detailLabel.text = [self.associado valueForKey:field] ;
+    [detailLabel sizeToFit] ;
+
+    return detailLabel.frame.size.height + 22 ;
+}
 
 @end

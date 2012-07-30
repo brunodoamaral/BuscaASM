@@ -20,8 +20,8 @@
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) NSMutableSet *associadosCarregados ;
 @property (nonatomic, strong) NSMutableData *responseData ;
-@property (weak, nonatomic) IBOutlet UIView *helpButton;
-@property (strong, nonatomic) UIPopoverController* popController ;
+@property (strong, nonatomic) UIPopoverController* popControllerHelp ;
+@property (strong, nonatomic) UIPopoverController* popControllerMap ;
 
 @end
 
@@ -34,15 +34,25 @@
 @synthesize toolBarTitle = _toolBarTitle;
 @synthesize associadosCarregados = _associadosCarregados ;
 @synthesize responseData = _responseData ;
-@synthesize popController = _popController ;
+@synthesize popControllerHelp = _popControllerHelp ;
+@synthesize popControllerMap = _popControllerMap ;
 
-- (UIPopoverController *)popController
+- (UIPopoverController *)popControllerHelp
 {
-    if ( !_popController && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+    if ( !_popControllerHelp && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
         UIViewController *popHelpView = [self.storyboard instantiateViewControllerWithIdentifier:@"helpView"] ;
-        _popController = [[UIPopoverController alloc] initWithContentViewController:popHelpView];
+        _popControllerHelp = [[UIPopoverController alloc] initWithContentViewController:popHelpView];
     } ;
-    return _popController ;
+    return _popControllerHelp ;
+}
+
+- (UIPopoverController *)popControllerMap
+{
+    if ( !_popControllerMap && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+        UIViewController *popMapView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"] ; // mapViewHeader
+        _popControllerMap = [[UIPopoverController alloc] initWithContentViewController:popMapView];
+    } ;
+    return _popControllerMap ;
 }
 
 - (void)setCategory:(NSString *)category
@@ -103,7 +113,7 @@
 
 - (void)hideHelp
 {
-    [self.popController dismissPopoverAnimated:YES];
+    [self.popControllerHelp dismissPopoverAnimated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -111,7 +121,7 @@
     [super viewDidAppear:animated];
     if ( UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]) ) {
         UIBarButtonItem *toolBar = [self.toolBar.items objectAtIndex:0] ;
-        [self.popController presentPopoverFromBarButtonItem:toolBar permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES] ;
+        [self.popControllerHelp presentPopoverFromBarButtonItem:toolBar permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES] ;
     };
 }
 
@@ -124,7 +134,6 @@
     [self setMapView:nil];
     [self setToolBar:nil];
     [self setToolBarTitle:nil];
-    [self setHelpButton:nil];
     [super viewDidUnload];
 }
 
@@ -195,14 +204,27 @@
         pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pinView"];
         pinView.pinColor = MKPinAnnotationColorRed;
         pinView.animatesDrop = YES;
-        pinView.canShowCallout = YES;
-        
+        pinView.canShowCallout = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone;        
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         pinView.rightCalloutAccessoryView = rightButton;
     } else {
         pinView.annotation = annotation;
     }
     return pinView;
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    if ( self.popControllerMap ) {
+        BuscaASMDetalheViewController *dvc = (BuscaASMDetalheViewController *) self.popControllerMap.contentViewController ;
+        dvc.associado = (BuscaASMAssociado*) view.annotation ;
+        CGRect rect = view.bounds ;
+        rect.origin = [self.mapView convertPoint:rect.origin fromView:view] ;
+        rect.size.width -= rect.size.width / 2 ;
+        rect.size.height = 12 ;
+        [self.popControllerMap presentPopoverFromRect:rect inView:self.mapView permittedArrowDirections:UIPopoverArrowDirectionDown|UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight animated:YES] ;
+    }
+//    mapViewHeader
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control

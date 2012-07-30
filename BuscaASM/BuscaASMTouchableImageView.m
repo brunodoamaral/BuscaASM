@@ -16,6 +16,7 @@
 
 @implementation BuscaASMTouchableImageView
 
+@synthesize delegateLongTouch = _delegateLongTouch ;
 @synthesize timer = _timer ;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

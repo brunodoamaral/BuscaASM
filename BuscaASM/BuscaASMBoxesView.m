@@ -339,7 +339,32 @@
 {
     if ( ! self.reset ) {
         b2Vec2 gravity;
-        gravity.Set( acceleration.x * GRAVITY,  acceleration.y * GRAVITY );
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation] ;
+        float x, y ;
+        switch (orientation) {
+            case UIInterfaceOrientationPortrait:
+                x = acceleration.x ;
+                y = acceleration.y ;
+                break;
+            case UIInterfaceOrientationLandscapeLeft:
+                x = acceleration.y ;
+                y = -acceleration.x ;
+                break;
+            case UIInterfaceOrientationLandscapeRight:
+                x = -acceleration.y ;
+                y = acceleration.x ;
+                break;
+            case UIInterfaceOrientationPortraitUpsideDown:
+                x = -acceleration.x ;
+                y = -acceleration.y ;
+                break;
+                
+            default:
+                x = 0 ;
+                y = 0 ;
+        }
+        
+        gravity.Set( x * GRAVITY, y * GRAVITY );
         world->SetGravity(gravity);
     }
 }
