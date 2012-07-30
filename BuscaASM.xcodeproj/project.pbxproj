@@ -48,6 +48,7 @@
 		15A9C90915A8AB1700648AD3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A9C90815A8AB1700648AD3 /* CoreLocation.framework */; };
 		15C3B90315B203FA00BCD7F5 /* BuscaASMAssociado.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C3B90215B203FA00BCD7F5 /* BuscaASMAssociado.m */; };
 		15DB128F15B1CA3400D4D9B5 /* BuscaASMMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DB128E15B1CA3400D4D9B5 /* BuscaASMMapViewController.m */; };
+		15EF423215C60ED50039C5B3 /* BuscaASMDetalheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15EF423115C60ED50039C5B3 /* BuscaASMDetalheViewController.m */; };
 		58E3D64915B75EFC0057031B /* Box2DConfig.cmake in Resources */ = {isa = PBXBuildFile; fileRef = 58E3D5E615B75EFC0057031B /* Box2DConfig.cmake */; };
 		58E3D64A15B75EFC0057031B /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 58E3D5E715B75EFC0057031B /* CMakeLists.txt */; };
 		58E3D64B15B75EFC0057031B /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58E3D5E915B75EFC0057031B /* b2BroadPhase.cpp */; };
@@ -164,6 +165,8 @@
 		15C3B90215B203FA00BCD7F5 /* BuscaASMAssociado.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuscaASMAssociado.m; sourceTree = "<group>"; };
 		15DB128D15B1CA3400D4D9B5 /* BuscaASMMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuscaASMMapViewController.h; sourceTree = "<group>"; };
 		15DB128E15B1CA3400D4D9B5 /* BuscaASMMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuscaASMMapViewController.m; sourceTree = "<group>"; };
+		15EF423015C60ED50039C5B3 /* BuscaASMDetalheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuscaASMDetalheViewController.h; sourceTree = "<group>"; };
+		15EF423115C60ED50039C5B3 /* BuscaASMDetalheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuscaASMDetalheViewController.m; sourceTree = "<group>"; };
 		58E3D5E515B75EFC0057031B /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		58E3D5E615B75EFC0057031B /* Box2DConfig.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Box2DConfig.cmake; sourceTree = "<group>"; };
 		58E3D5E715B75EFC0057031B /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -407,6 +410,8 @@
 				1522C6B715A7E16900830F86 /* BuscaASMListaMedicosViewController.m */,
 				15DB128D15B1CA3400D4D9B5 /* BuscaASMMapViewController.h */,
 				15DB128E15B1CA3400D4D9B5 /* BuscaASMMapViewController.m */,
+				15EF423015C60ED50039C5B3 /* BuscaASMDetalheViewController.h */,
+				15EF423115C60ED50039C5B3 /* BuscaASMDetalheViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -730,6 +735,7 @@
 				58E3D67615B75EFC0057031B /* b2WheelJoint.cpp in Sources */,
 				58E3D67715B75EFC0057031B /* b2Rope.cpp in Sources */,
 				58E3D67A15B768F30057031B /* BuscaASMTouchableImageView.m in Sources */,
+				15EF423215C60ED50039C5B3 /* BuscaASMDetalheViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import "BuscaASMMapViewController.h"
 #import "BuscaASMAssociado.h"
+#import "BuscaASMDetalheViewController.h"
 #import "SBJSON.h"
 #import <MapKit/MapKit.h>
 
@@ -182,6 +183,43 @@
 //    NSLog(@"did center = %f / %f", mapView.region.center.latitude, mapView.region.center.longitude);
 //    NSLog(@"did span = %f / %f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
     [self updateMap: mapView];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if ( [annotation isKindOfClass:[MKUserLocation class]] )
+        return nil ;
+    
+    MKPinAnnotationView *pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pinView"];
+    if (!pinView) {
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pinView"];
+        pinView.pinColor = MKPinAnnotationColorRed;
+        pinView.animatesDrop = YES;
+        pinView.canShowCallout = YES;
+        
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        pinView.rightCalloutAccessoryView = rightButton;
+    } else {
+        pinView.annotation = annotation;
+    }
+    return pinView;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    [self performSegueWithIdentifier:@"viewDetail" sender:view.annotation] ;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ( [segue.identifier isEqualToString:@"viewDetail"] ) {
+        if ( [sender isKindOfClass:[BuscaASMAssociado class]] ) {
+            BuscaASMAssociado *associado = (BuscaASMAssociado*) sender ;
+            NSLog(@"nome = %@", associado.nome) ;
+            BuscaASMDetalheViewController *dvc = (BuscaASMDetalheViewController*) [segue destinationViewController] ;
+            dvc.associado = associado ;
+        }
+    }
 }
 
 #pragma mark Gesture Recognizers
